@@ -3,15 +3,22 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <div class="container mt-3">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="header">
         <h1 class="mb-0">Users:</h1>
-        <a href="{{ route ('create-user') }}" target="_blank">
-        <button class="btn btn-success" >Create User</button>
-    </a>
+    </div>
+    <div class="actions">
+        <a href="{{ route ('create-user') }}" target="_blank" class="action-btn">
+            <button class="btn btn-success">Create User</button>
+        </a>
+        <a href="{{ route ('add-permission') }}" target="_blank" class="action-btn">
+            <button class="btn btn-success">Add Permissions</button>
+        </a>
     </div>
 </div>
+
     {{-- <h1>Users</h1>
     <div class=" mb-1 add-user-btn d-flex justify-content-end">
        <a href="{{ route ('create-user') }}">
@@ -31,6 +38,25 @@
         height: 100vh;
         margin: 0;
     }
+    .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.header {
+    margin-right: auto; /* Push to the left */
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.action-btn {
+    margin-left: 10px; /* Add some space between buttons */
+}
+
     
     table {
         width: 100%;
@@ -76,24 +102,31 @@
 <table >
     <thead>
         <tr>
-            <th>ID</th>
+            {{-- <th>ID</th> --}}
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($users as $key => $user)
+        @foreach ($users as $user)
                 <tr>
-                    <td>{{ $key + 1}}</td>
+                    {{-- <td>{{ $key + 1}}</td> --}}
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
+                    <td class="text-right">
+                        <a href="{{ route('edit-user', ['id' => $user->id]) }}" target="_blank" class="btn btn-sm btn-primary ">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{{ route('edit-permissions', ['id' => $user->id]) }}" target="_blank" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-key"></i>
+                        </a>
+                    </td>
                 </tr>
             @endforeach
     </tbody>
 </table>
-    {{-- <p>Welcome to this beautiful admin panel.</p> --}}
 @stop
 
 @section('css')

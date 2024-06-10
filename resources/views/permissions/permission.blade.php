@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Add Users:</h1>
+    <h1>Add Permissions:</h1>
     <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,27 +101,28 @@ input[type="submit"],
 
 </style>
     <div class="mt-3 form-container">
-        <form action="{{ route ('add-users') }}" method="post">
+
+        @if(session('permission'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('permission') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+        <form action="{{ route ('save-permission') }}" method="post">
             @csrf
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description"></textarea>
+            </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-
-            <label for="role">Role:</label>
-            <select id="role" name="role" required>
-                <option value="">Select a role</option>
-                <option value="admin">Admin</option>
-                <option value="editor">Editor</option>
-                <option value="viewer">Viewer</option>
-            </select>
-            
             <div class="button-container">
-                <button type="submit" class="btn btn-success">Add User</button>
+                <button type="submit" class="btn btn-success">Add Permission</button>
                 <a href="{{ route ('home')}}">
                     <button type="button" class="btn btn-secondary">Close</button>
                 </a>

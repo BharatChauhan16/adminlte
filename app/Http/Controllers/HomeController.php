@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Adduser;
-
-
+use App\Models\UserProfile;
+use App\Models\Permission;
 class HomeController extends Controller
 {
     /**
@@ -25,10 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        return view('home');
+    }
+    public function showUser()
+    {
         $users = Adduser::all();
-        return view('home', [
+        // $users = Adduser::paginate(4);
+        return view('users.show_users', [
             'users' => $users
         ]);
-        // return view('home');
     }
 }
