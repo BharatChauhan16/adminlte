@@ -29,10 +29,10 @@ class HomeController extends Controller
     }
     public function showUser()
     {
-        $users = Adduser::all();
+        $addusers = Adduser::all();
         // $users = Adduser::paginate(4);
         return view('users.show_users', [
-            'users' => $users
+            'addusers' => $addusers
         ]);
     }
 }

@@ -160,25 +160,17 @@ table {
     <div class="mt-1 form-container">
         <form action="#" method="post" enctype="multipart/form-data">
             @csrf
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Select</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($permissions as $permission)
-                        <tr>
-                            <td><input type="checkbox" name="permission[]" value="{{ $permission->id }}"></td>
-                            <td>{{ $permission->title }}</td>
-                            <td>{{ $permission->description }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-              
+           @foreach ($permissions as $type => $typePermissions)
+               <h2>{{ ucfirst($type) }} Permissions</h2>
+               <ul>
+                 @foreach ($typePermissions as $permission)
+                    <li>
+                        <input type="checkbox" name="permissions[]" value="{{ $permission->id }}">
+                        <strong>{{ $permission->title }}</strong>: {{ $permission->description }}
+                    </li>
+                 @endforeach
+               </ul>
+             @endforeach
         </form>
     </div>
 </div>

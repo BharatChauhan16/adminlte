@@ -10,11 +10,11 @@ use App\Models\Permission;
 
 class EdituserController extends Controller
 {
-    public function edit($userId)
+    public function edit($id)
 {   
-      $users = Adduser::find($userId);
-    return view('users.edit_users', [
-        'users' => $users
+       $addusers = AddUser::findOrFail($id);
+        return view('users.edit_users', [
+        'addusers' => $addusers
     ]);
 
 }
@@ -43,13 +43,13 @@ public function editUser(Request $request)
 
         // Create user profile
         $userProfile = new UserProfile($validatedData);
-        $userProfile->user_id = auth()->id(); // Assuming user is logged in
+        $userProfile->users_id = auth()->id(); // Assuming user is logged in
         $userProfile->fill($files);
         $userProfile->save();
 
         // UserProfile::create($validatedData);
 
-        return redirect('/admin/users');
+        return redirect('/admin/users')->with('edituser', 'User account updated.');
         // dd($request->all()); $validatedData  
     }
 

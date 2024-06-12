@@ -113,11 +113,20 @@ input[type="submit"],
         <form action="{{ route ('save-permission') }}" method="post">
             @csrf
             <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" name="title" required>
+                <label for="type">Type:</label>
+                <select name="type" id="type" class="form-control">
+                    <option value="User">Users</option>
+                    <option value="Leaves">Leaves</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Projects">Projects</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="description">Description</label>
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
                 <textarea class="form-control" id="description" name="description"></textarea>
             </div>
 

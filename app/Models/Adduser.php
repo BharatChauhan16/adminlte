@@ -10,9 +10,10 @@ class Adduser extends Model
     use HasFactory;
 
     protected $fillable = ['name','email','password','role'];
-    
 
-    public function profile() {
+
+    public function userProfile()
+    {
         return $this->hasOne(UserProfile::class);
     }
 }

@@ -19,7 +19,7 @@ class PermissionController extends Controller
 
     public function editPermission()
     {
-        $permissions = Permission::all();
+        $permissions = Permission::all()->groupBy('type');
         return view('permissions.edit_permissions', [
             'permissions' => $permissions
         ]);
@@ -28,12 +28,13 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+                'type' => 'required|string',
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
         ]);
 
-        Permission::create($request->only('title', 'description'));
-
+        Permission::create($request->all());
+        // dd($request->all());
         // return redirect()->route('permissions.index');
         return redirect('/add-permission')->with('permission', 'New Permission saved successfully.');
     }

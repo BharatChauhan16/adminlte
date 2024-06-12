@@ -9,7 +9,7 @@ class UserProfile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id',
+    protected $fillable = ['users_id',
     'address', 
     'qualifications', 
     'employee_code', 
@@ -19,7 +19,8 @@ class UserProfile extends Model
     'joining_letter', 
      'contract'];
 
-     public function user() {
+     public function user()
+    {
         return $this->belongsTo(Adduser::class);
     }
 }

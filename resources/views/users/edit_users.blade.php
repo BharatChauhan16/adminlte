@@ -102,17 +102,17 @@
     
 
 <div class=" mt-3 container">
-    <form action="{{ route('edit-user', $users->id) }}" method="POST">
+    <form action="{{ route('edit-user', $addusers->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group">
             <label for="email">User Email</label>
-            <input type="email" id="email" name="email" class="form-control" value="{{ $users->email }}" readonly>
+            <input type="email" id="email" name="email" class="form-control" value="{{ $addusers->email }}" readonly>
         </div>
 
              <div class="form-group">
                 <label for="employeecode">Employee Code</label>
-                <input type="text" id="employee_code" name="employee_code" class="form-control" value="CW000{{ $users->id }}" readonly>
+                <input type="text" id="employee_code" name="employee_code" class="form-control" value="CW000{{ $addusers->id }}" readonly>
             </div> 
             
         
@@ -134,7 +134,7 @@
             
             <div>
                 <label for="employee_code">Employee Code:</label>
-                <input type="text" id="employee_code" name="employee_code" value="CW000{{ $users->id }}" readonly>
+                <input type="text" id="employee_code" name="employee_code" value="CW000{{ $addusers->id }}" readonly>
             </div>
             <div>
                 <label for="academic_documents">Academic Documents (PDF):</label>

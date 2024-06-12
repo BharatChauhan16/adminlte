@@ -99,6 +99,25 @@
         color: #333;
     }
     </style>
+    <div class="mt-3 form-container">
+
+        @if(session('edituser'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('edituser') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+
+        @if(session('adduser'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('adduser') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
 <table >
     <thead>
         <tr>
@@ -109,7 +128,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($users as $user)
+        @foreach ($addusers as $user)
                 <tr>
                     {{-- <td>{{ $key + 1}}</td> --}}
                     <td>{{ $user->name }}</td>

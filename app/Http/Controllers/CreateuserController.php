@@ -39,7 +39,7 @@ class CreateuserController extends Controller
         'password' => bcrypt($request->password),
         'role' => $request->role,
     ]);
-    return redirect('/admin/users');
+    return redirect('/admin/users')->with('adduser', 'User added successfully.');
     // Adduser::create($request->all());
     // dd($request->all());    
    }
