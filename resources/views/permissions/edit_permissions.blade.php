@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Edit Permission:</h1>
+    <h1>Edit Permissions:</h1>
     <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,6 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
-          
             /* justify-content: center;
             align-items: center; */
             height: 100vh;
@@ -160,17 +159,21 @@ table {
     <div class="mt-1 form-container">
         <form action="#" method="post" enctype="multipart/form-data">
             @csrf
-           @foreach ($permissions as $type => $typePermissions)
-               <h2>{{ ucfirst($type) }} Permissions</h2>
-               <ul>
-                 @foreach ($typePermissions as $permission)
-                    <li>
-                        <input type="checkbox" name="permissions[]" value="{{ $permission->id }}">
-                        <strong>{{ $permission->title }}</strong>: {{ $permission->description }}
+            @foreach($permissions as $type => $perms)
+            <h2>{{ ucfirst($type) }} Permissions</h2>
+            <ul class="list-group">
+                @foreach($perms as $permission)
+                    <li class="list-group-item">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="permission-{{ $permission->id }}" name="permissions[]" value="{{ $permission->id }}">
+                            <label class="custom-control-label" for="permission-{{ $permission->id }}">
+                                <strong>{{ $permission->title }}</strong> - {{ $permission->description }}
+                            </label>
+                        </div>
                     </li>
-                 @endforeach
-               </ul>
-             @endforeach
+                @endforeach
+            </ul>
+        @endforeach
         </form>
     </div>
 </div>
