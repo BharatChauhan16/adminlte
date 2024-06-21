@@ -4,6 +4,7 @@
 
 use Illuminate\Http\Request;
 use App\Models\Adduser;
+use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\Permission;
 
@@ -12,9 +13,9 @@ class EdituserController extends Controller
 {
     public function edit($id)
 {   
-       $addusers = AddUser::findOrFail($id);
+         $users = User::findOrFail($id);
         return view('users.edit_users', [
-        'addusers' => $addusers
+        'users' => $users
     ]);
 
 }

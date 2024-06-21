@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Edit-permissions')
 
 @section('content_header')
     <h1>Edit Permissions:</h1>
@@ -157,23 +157,28 @@ table {
 
 
     <div class="mt-1 form-container">
-        <form action="#" method="post" enctype="multipart/form-data">
+        <form action="{{ route('save-permissions') }}" method="post" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="user_id" value="{{ $user->id }}">
+            
             @foreach($permissions as $type => $perms)
-            <h2>{{ ucfirst($type) }} Permissions</h2>
-            <ul class="list-group">
-                @foreach($perms as $permission)
-                    <li class="list-group-item">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="permission-{{ $permission->id }}" name="permissions[]" value="{{ $permission->id }}">
-                            <label class="custom-control-label" for="permission-{{ $permission->id }}">
-                                <strong>{{ $permission->title }}</strong> - {{ $permission->description }}
-                            </label>
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
-        @endforeach
+                <h2>{{ ucfirst($type) }} Permissions</h2>
+                <ul class="list-group">
+                    @foreach($perms as $permission)
+                        <li class="list-group-item">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="permission-{{ $permission->id }}" name="permissions[]" value="{{ $permission->id }}" 
+                                {{ $user->permissions->contains($permission->id) ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="permission-{{ $permission->id }}">
+                                    <strong>{{ $permission->title }}</strong> - {{ $permission->description }}
+                                </label>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            @endforeach
+            
+            <button type="submit" class="mt-2 btn btn-success">Add Permissions</button>
         </form>
     </div>
 </div>

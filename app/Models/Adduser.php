@@ -12,8 +12,18 @@ class Adduser extends Model
     protected $fillable = ['name','email','password','role'];
 
 
-    public function userProfile()
+    protected static function boot()
     {
-        return $this->hasOne(UserProfile::class);
+        parent::boot();
+
+        // This will be triggered after the model is saved
+        static::saved(function ($adduser) {
+            // Save data to the users table
+            User::create([
+                'name' => $adduser->name,
+                'email' => $adduser->email,
+                'password' => $adduser->password,
+            ]);
+        });
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Adduser;
 use App\Models\UserProfile;
+use App\Models\User;
 use App\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +16,6 @@ class CreateuserController extends Controller
     public function create()
     {
         $users = Adduser::all();
-        // $users = Adduser::paginate(4);
         return view('users.create_users', [
             'users' => $users
         ]);    

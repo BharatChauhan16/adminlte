@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Contriwhiz-users')
 
 @section('content_header')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -128,7 +128,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($addusers as $user)
+        @foreach ($users as $user)
                 <tr>
                     {{-- <td>{{ $key + 1}}</td> --}}
                     <td>{{ $user->name }}</td>

@@ -3,36 +3,43 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Adduser;
+use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\Permission;
+use App\Models\Attendance;
+use App\Models\Break;
+use Carbon\Carbon;
+use Auth;
+
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        return view('home');
+        $userId = auth()->user()->id;
+        $attendance = Attendance::where('user_id', $userId)->latest()->first();
+        $clockInTime = $attendance && $attendance->clockin_time ? new Carbon($attendance->clockin_time) : null;
+        $clockOutTime = $attendance && $attendance->clockout_time ? new Carbon($attendance->clockout_time) : null;
+        $productiveHours = $attendance ? $attendance->productive_hours : '00:00:00';
+        
+        // Fetch breaks associated with the current attendance
+        $breaks = $attendance ? $attendance->breaks : collect();
+
+        return view('home', compact('clockInTime', 'clockOutTime', 'productiveHours', 'breaks'));
     }
+
     public function showUser()
     {
-        $addusers = Adduser::all();
-        // $users = Adduser::paginate(4);
+        $users = User::all();
+        $permissions = Permission::all();
         return view('users.show_users', [
-            'addusers' => $addusers
+            'users' => $users,
+            'permissions' => $permissions,
         ]);
     }
 }
+

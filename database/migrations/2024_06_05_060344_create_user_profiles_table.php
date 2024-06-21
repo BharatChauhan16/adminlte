@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('users_id');
-                $table->foreign('users_id')->references('id')->on('addusers')->onDelete('cascade');
+                $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
                 $table->text('address')->nullable();
                 $table->text('qualifications')->nullable();
                 $table->string('employee_code')->nullable();
