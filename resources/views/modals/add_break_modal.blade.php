@@ -1,4 +1,3 @@
-<!-- Modal -->
 <div class="modal fade" id="breakModal" tabindex="-1" role="dialog" aria-labelledby="breakModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -9,16 +8,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="addBreakForm">
                     <div class="form-group">
-                        <label for="breakReason">Reason</label>
-                        <input type="text" class="form-control" id="breakReason" placeholder="Enter reason for break">
+                        <label for="breakReason">Break Reason</label>
+                        <input type="text" class="form-control" id="breakReason" required>
                     </div>
+                    <button type="submit" class="btn btn-primary">Take Break</button>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="takeBreakBtn">Take Break</button>
             </div>
         </div>
     </div>

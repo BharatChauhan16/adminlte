@@ -10,11 +10,12 @@ class Breaks extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'attendance_id',
-        'start_time',
-        'reason',
-        'break_time',
-        'end_time',
+        'attendance_id', 'start_time', 'reason', 'break_time', 'end_time',
+    ];
+
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
     ];
 
     public function attendance()

@@ -19,27 +19,7 @@ class HomeController extends Controller
 
     public function index()
 {
-    $user = auth()->user();
-    $attendance = Attendance::where('user_id', $user->id)->latest()->first();
-
-    $clockInTime = null;
-    $clockOutTime = null;
-    $productiveHours = '00:00:00'; // Default value
-
-    $breaks = Breaks::where('attendance_id', $attendance ? $attendance->id : null)->get();
-    $attendanceId = $attendance ? $attendance->id : null;
-
-    if ($attendance) {
-        $clockInTime = $attendance->clockin_time ? Carbon::parse($attendance->clockin_time) : null;
-        $clockOutTime = $attendance->clockout_time ? Carbon::parse($attendance->clockout_time) : null;
-
-        // Calculate productive hours if both clock in and clock out times are set
-        if ($clockInTime && $clockOutTime) {
-            $productiveHours = $clockOutTime->diff($clockInTime)->format('%H:%I:%S');
-        }
-    }
-
-    return view('home', compact('clockInTime', 'clockOutTime', 'productiveHours', 'breaks', 'attendanceId', 'attendance'));
+    return view('home');
 }
 public function clockIn(Request $request)
 {
@@ -97,6 +77,25 @@ public function saveProductiveHours(Request $request)
     }
 
     return response()->json(['error' => 'No valid attendance found'], 404);
+}
+public function saveBreak(Request $request)
+{
+    $break = new Breaks();
+    $break->attendance_id = 1; // Replace with actual attendance ID
+    $break->reason = $request->reason;
+    $break->start_time = now(); // Current time
+    $break->save();
+
+    return response()->json($break);
+}
+
+public function endBreak($id)
+{
+    $break = Breaks::findOrFail($id);
+    $break->end_time = now(); // Current time
+    $break->save();
+
+    return response()->json($break);
 }
 
     public function showUser()

@@ -27,7 +27,7 @@ class Attendance extends Model
     }
 
     public function breaks()
-    {
-        return $this->hasMany(Breaks::class);
-    }
+{
+    return $this->hasMany(Breaks::class);
+}
 }
