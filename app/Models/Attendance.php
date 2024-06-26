@@ -13,6 +13,7 @@ class Attendance extends Model
         'user_id',
         'clockin_time',
         'clockout_time',
+        'productive_hours',
     ];
 
     protected $dates = [
@@ -29,15 +30,4 @@ class Attendance extends Model
     {
         return $this->hasMany(Breaks::class);
     }
-
-    public function getProductiveHoursAttribute()
-    {
-        if ($this->clockin_time && $this->clockout_time) {
-            $clockin = new Carbon($this->clockin_time);
-            $clockout = new Carbon($this->clockout_time);
-            return $clockout->diff($clockin)->format('%H:%I:%S');
-        }
-        return '00:00:00';
-    }
-   
 }

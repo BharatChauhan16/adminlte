@@ -12,12 +12,8 @@ class Breaks extends Model
     protected $fillable = [
         'attendance_id',
         'start_time',
-        'end_time',
         'reason',
-    ];
-
-    protected $dates = [
-        'start_time',
+        'break_time',
         'end_time',
     ];
 

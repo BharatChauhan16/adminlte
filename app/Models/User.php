@@ -48,5 +48,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class, 'user_permissions', 'user_id', 'permission_id');
     }
+    public function attendance()
+    {
+        return $this->hasOne(Attendance::class)->latest();
+    }
+
+    public function breaks()
+    {
+        return $this->hasManyThrough(Breaks::class, Attendance::class);
+    }
 }
 

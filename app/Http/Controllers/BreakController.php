@@ -6,34 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Breaks;
 use App\Models\Attendance;
 use Carbon\Carbon;
-use Auth;
 
-class BreakController extends Controller
+class BreaksController extends Controller
 {
-    public function startBreak(Request $request)
+    public function addBreak(Request $request)
     {
-        $attendance = Attendance::where('user_id', Auth::id())->whereNull('clockout_time')->first();
+        $attendance = Attendance::where('user_id', auth()->id())->latest()->first();
 
-        if ($attendance) {
-            $break = Breaks::create([
-                'attendance_id' => $attendance->id,
-                'start_time' => Carbon::now(),
-                'reason' => $request->reason,
-            ]);
+        $break = new Breaks();
+        $break->attendance_id = $attendance->id;
+        $break->start_time = now();
+        $break->reason = $request->input('reason');
+        $break->save();
 
-            return redirect()->back()->with('success', 'Break started successfully');
-        }
-
-        return redirect()->back()->with('error', 'Unable to start break');
-    }
-
-    public function endBreak($id)
-    {
-        $break = Breaks::findOrFail($id);
-        $break->update([
-            'end_time' => Carbon::now(),
-        ]);
-
-        return redirect()->back()->with('success', 'Break ended successfully');
+        return redirect()->route('home')->with('success', 'Break started successfully.');
     }
 }

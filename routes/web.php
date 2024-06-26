@@ -3,17 +3,21 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CreateuserController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ShowuserController;
 use App\Http\Controllers\EdituserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BreakController;
-use Illuminate\Support\Facades\Artisan;
-// use App\Http\Controllers\Auth\LoginController;
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/admin/users', [HomeController::class, 'showUser'])->name('admin-users');
+// Route::get('dashboard', [AttendanceController::class, 'index'])->name('dashboard');
 
 // CREATE USERS
 Route::get('/create-user', [CreateuserController::class, 'create'])->name('create-user');
@@ -33,15 +37,9 @@ Route::get('/edit-permissions/{id}', [PermissionController::class, 'editPermissi
 Route::post('/save-permissions', [PermissionController::class, 'savePermission'])->name('save-permissions');
 
 //ATTENDANCE AND BREAKS
-// Attendance Routes
-// Ensure these routes are protected by authentication middleware
-Route::middleware(['auth'])->group(function () {
-    Route::post('/clockin', [AttendanceController::class, 'clockIn'])->name('clockin');
-    Route::post('/clockout', [AttendanceController::class, 'clockOut'])->name('clockout');
-});
-
-// Break Routes
-Route::post('/breaks/start', [BreakController::class, 'startBreak'])->name('breaks.start');
-Route::post('/breaks/{id}/end', [BreakController::class, 'endBreak'])->name('breaks.end');
+Route::post('/clock-in', [HomeController::class, 'clockIn'])->name('clock-in');
+Route::post('/clock-out', [HomeController::class, 'clockOut'])->name('clock-out');
+Route::post('/save-productive-hours', [HomeController::class, 'saveProductiveHours'])->name('save-productive-hours');
 
 Auth::routes();
+
