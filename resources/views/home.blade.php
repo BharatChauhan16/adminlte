@@ -51,6 +51,7 @@
                     <i class="fas fa-hourglass-half"></i>
                 </div>
                 <button id="productiveHoursBtn" class="btn btn-primary">Save Productive Hours</button>
+                <button id="calculateproductiveHoursBt" class="btn btn-primary">Calculate Productive Hours</button>
             </div>
         </div>
     </div>
@@ -250,6 +251,29 @@ $(document).ready(function() {
         });
     }
 });
+// Existing code...
+        
+        // Add this function to calculate and display productive hours
+        function calculateProductiveHours() {
+            fetch("{{ route('calculate-productive-hours') }}", {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("productiveHoursTimer").innerText = data.productiveHours;
+                } else {
+                    console.error('Error calculating productive hours:', data.error);
+                }
+            });
+        }
+
+        // Event listener for the "Calculate Productive Hours" button
+        document.getElementById("calculateproductiveHoursBt").addEventListener("click", function() {
+            calculateProductiveHours();
+        });
     
     </script>
 @stop

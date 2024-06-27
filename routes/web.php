@@ -42,6 +42,8 @@ Route::post('/clock-out', [HomeController::class, 'clockOut'])->name('clock-out'
 Route::post('/save-productive-hours', [HomeController::class, 'saveProductiveHours'])->name('save-productive-hours');
 Route::post('/save-break', [HomeController::class, 'saveBreak'])->name('save.break');
 Route::post('/end-break/{id}', [HomeController::class, 'endBreak'])->name('end.break');
+Route::get('/calculate-productive-hours', [HomeController::class, 'calculateProductiveHours'])->name('calculate-productive-hours');
+
 
 
 

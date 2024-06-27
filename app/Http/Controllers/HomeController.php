@@ -97,7 +97,43 @@ public function endBreak($id)
 
     return response()->json($break);
 }
+public function calculateProductiveHours(Request $request)
+{
+    $attendance = Attendance::where('user_id', Auth::id())
+        ->whereNotNull('clockin_time')
+        ->whereNotNull('clockout_time')
+        ->latest()
+        ->first();
 
+    if ($attendance) {
+        // Get total break time
+        $breaks = Breaks::where('attendance_id', $attendance->id)->get();
+        $totalBreakTime = 0;
+
+        foreach ($breaks as $break) {
+            if ($break->end_time) {
+                $start = Carbon::parse($break->start_time);
+                $end = Carbon::parse($break->end_time);
+                $totalBreakTime += $end->diffInSeconds($start);
+            }
+        }
+
+        // Calculate productive hours
+        $clockIn = Carbon::parse($attendance->clockin_time);
+        $clockOut = Carbon::parse($attendance->clockout_time);
+        $totalWorkTime = $clockOut->diffInSeconds($clockIn);
+        $productiveTime = $totalWorkTime - $totalBreakTime;
+
+        $hours = floor($productiveTime / 3600);
+        $minutes = floor(($productiveTime % 3600) / 60);
+        $seconds = $productiveTime % 60;
+        $formattedProductiveHours = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+
+        return response()->json(['success' => true, 'productiveHours' => $formattedProductiveHours]);
+    }
+
+    return response()->json(['success' => false, 'error' => 'No valid attendance found'], 404);
+}
     public function showUser()
     {
         $users = User::all();
